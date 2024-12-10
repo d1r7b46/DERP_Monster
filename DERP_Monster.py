@@ -55,6 +55,9 @@ def generate_emails(domain):
     return emails
 
 def save_emails(emails, domain):
+    # Remove duplicates by converting to a set and then back to a list
+    unique_emails = list(set(emails))
+
     # Create a filename based on the domain
     filename = domain + "_DERPed.txt"
     
@@ -62,11 +65,11 @@ def save_emails(emails, domain):
     if os.path.exists(filename):
         print(f"File {filename} already exists. Appending emails to it.")
         with open(filename, 'a') as output_file:
-            for email in emails:
+            for email in unique_emails:
                 output_file.write(email + '\n')
     else:
         with open(filename, 'w') as output_file:
-            for email in emails:
+            for email in unique_emails:
                 output_file.write(email + '\n')
     print(f"\nGenerated emails are saved in {filename}")
 
